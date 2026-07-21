@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { useAuth } from "../lib/AuthContext";
 import { useSprint } from "../lib/SprintContext";
 
 const LINKS = [
@@ -15,7 +16,8 @@ const LINKS = [
 
 export function Layout() {
   const [scrolled, setScrolled] = useState(false);
-  const { state } = useSprint();
+  const { state, hydrating } = useSprint();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -42,11 +44,27 @@ export function Layout() {
               </NavLink>
             ))}
           </nav>
-          <Link to={state.hypotheses.length ? "/#this-week" : "/hypothesis"} className="btn sm">
-            {state.hypotheses.length ? "This week" : "Build weekly bet"}
-          </Link>
+          <div className="topnav-actions">
+            <Link
+              to={state.hypotheses.length ? "/#this-week" : "/hypothesis"}
+              className="btn sm"
+            >
+              {state.hypotheses.length ? "This week" : "Build weekly bet"}
+            </Link>
+            <button
+              type="button"
+              className="btn sm ghost"
+              onClick={() => void signOut()}
+              title={user?.email ?? "Sign out"}
+            >
+              Sign out
+            </button>
+          </div>
         </div>
       </header>
+      {hydrating ? (
+        <div className="sync-banner wrap">Syncing your sprint…</div>
+      ) : null}
       <Outlet />
       <footer className="footer">
         <div className="wrap">
@@ -58,7 +76,7 @@ export function Layout() {
           >
             Ultra Lab Experiment Playbook
           </a>
-          . Data stays in your browser.
+          . Sprint data syncs to your account via Supabase.
         </div>
       </footer>
     </div>

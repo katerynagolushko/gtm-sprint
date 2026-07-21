@@ -10,7 +10,7 @@ import type {
 
 const STORAGE_KEY = "gtm-sprint-v2";
 
-const defaultState = (): SprintState => ({
+export const defaultState = (): SprintState => ({
   profile: {
     startupName: "",
     oneLiner: "",
@@ -21,6 +21,10 @@ const defaultState = (): SprintState => ({
   experiments: [],
   learnings: [],
 });
+
+function storageKey(userId?: string | null) {
+  return userId ? `${STORAGE_KEY}:${userId}` : STORAGE_KEY;
+}
 
 function uid() {
   return crypto.randomUUID();
@@ -54,26 +58,37 @@ function normalizeHypothesis(raw: Partial<Hypothesis> & { id: string }): Hypothe
   };
 }
 
-export function loadState(): SprintState {
+export function normalizeLoadedState(raw: unknown): SprintState {
+  const parsed = (raw ?? {}) as Partial<SprintState>;
+  return {
+    ...defaultState(),
+    ...parsed,
+    profile: { ...defaultState().profile, ...(parsed.profile ?? {}) },
+    assumptions: parsed.assumptions ?? [],
+    hypotheses: (parsed.hypotheses ?? []).map((h) =>
+      normalizeHypothesis(h as Hypothesis),
+    ),
+    experiments: parsed.experiments ?? [],
+    learnings: parsed.learnings ?? [],
+  };
+}
+
+export function loadState(userId?: string | null): SprintState {
   try {
     const raw =
-      localStorage.getItem(STORAGE_KEY) || localStorage.getItem("gtm-sprint-v1");
+      localStorage.getItem(storageKey(userId)) ||
+      (!userId
+        ? localStorage.getItem("gtm-sprint-v1")
+        : localStorage.getItem(STORAGE_KEY));
     if (!raw) return defaultState();
-    const parsed = JSON.parse(raw) as SprintState;
-    return {
-      ...defaultState(),
-      ...parsed,
-      hypotheses: (parsed.hypotheses ?? []).map((h) =>
-        normalizeHypothesis(h as Hypothesis),
-      ),
-    };
+    return normalizeLoadedState(JSON.parse(raw));
   } catch {
     return defaultState();
   }
 }
 
-export function saveState(state: SprintState) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+export function saveState(state: SprintState, userId?: string | null) {
+  localStorage.setItem(storageKey(userId), JSON.stringify(state));
 }
 
 export function createAssumption(

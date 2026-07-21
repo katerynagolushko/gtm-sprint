@@ -46,3 +46,12 @@ Link to GitHub later from the Vercel project settings.
 | Install | `npm install` |
 
 `vercel.json` already rewrites all routes to `index.html` for React Router.
+
+## Supabase (required for login)
+
+After deploy, set on the Vercel project:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+
+Then run `supabase/schema.sql` in the Supabase SQL editor and configure Auth redirect URLs. Full steps: [SUPABASE.md](./SUPABASE.md).

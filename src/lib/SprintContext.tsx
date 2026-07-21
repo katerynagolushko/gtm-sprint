@@ -4,14 +4,18 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
+import { useAuth } from "./AuthContext";
+import { fetchSprintState, persistSprintState } from "./cloud";
 import {
   createAssumption,
   createExperiment,
   createHypothesis,
   createLearning,
+  defaultState,
   loadState,
   saveState,
   type HypothesisInput,
@@ -31,6 +35,7 @@ import type {
 
 type SprintContextValue = {
   state: SprintState;
+  hydrating: boolean;
   setProfile: (p: Partial<ProgramProfile>) => void;
   addAssumption: (input: {
     text: string;
@@ -72,11 +77,55 @@ type SprintContextValue = {
 const SprintContext = createContext<SprintContextValue | null>(null);
 
 export function SprintProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<SprintState>(() => loadState());
+  const { user } = useAuth();
+  const userId = user?.id ?? null;
+  const [state, setState] = useState<SprintState>(() => loadState(null));
+  const [hydrating, setHydrating] = useState(Boolean(userId));
+  const skipNextPersist = useRef(false);
 
   useEffect(() => {
-    saveState(state);
-  }, [state]);
+    let cancelled = false;
+
+    async function hydrate() {
+      if (!userId) {
+        setState(defaultState());
+        setHydrating(false);
+        return;
+      }
+
+      setHydrating(true);
+      const remote = await fetchSprintState(userId);
+      if (cancelled) return;
+
+      skipNextPersist.current = true;
+      if (remote) {
+        setState(remote);
+        saveState(remote, userId);
+      } else {
+        const local = loadState(userId);
+        setState(local);
+        await persistSprintState(userId, local);
+      }
+      setHydrating(false);
+    }
+
+    void hydrate();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
+
+  useEffect(() => {
+    if (!userId || hydrating) return;
+    if (skipNextPersist.current) {
+      skipNextPersist.current = false;
+      return;
+    }
+    const t = window.setTimeout(() => {
+      void persistSprintState(userId, state);
+    }, 400);
+    return () => window.clearTimeout(t);
+  }, [state, userId, hydrating]);
 
   const setProfile = useCallback((p: Partial<ProgramProfile>) => {
     setState((s) => ({ ...s, profile: { ...s.profile, ...p } }));
@@ -128,10 +177,7 @@ export function SprintProvider({ children }: { children: ReactNode }) {
     const h = createHypothesis({ ...input, isActiveBet: true });
     setState((s) => ({
       ...s,
-      hypotheses: [
-        h,
-        ...s.hypotheses.map((x) => ({ ...x, isActiveBet: false })),
-      ],
+      hypotheses: [h, ...s.hypotheses.map((x) => ({ ...x, isActiveBet: false }))],
     }));
     return h;
   }, []);
@@ -228,16 +274,16 @@ export function SprintProvider({ children }: { children: ReactNode }) {
   );
 
   const resetAll = useCallback(() => {
-    if (confirm("Clear all sprint data on this device?")) {
-      localStorage.removeItem("gtm-sprint-v2");
-      localStorage.removeItem("gtm-sprint-v1");
-      setState(defaultEmpty());
-    }
-  }, []);
+    if (!confirm("Clear all sprint data for your account?")) return;
+    const empty = defaultState();
+    setState(empty);
+    if (userId) void persistSprintState(userId, empty);
+  }, [userId]);
 
   const value = useMemo(
     () => ({
       state,
+      hydrating,
       setProfile,
       addAssumption,
       updateAssumption,
@@ -255,6 +301,7 @@ export function SprintProvider({ children }: { children: ReactNode }) {
     }),
     [
       state,
+      hydrating,
       setProfile,
       addAssumption,
       updateAssumption,
@@ -273,16 +320,6 @@ export function SprintProvider({ children }: { children: ReactNode }) {
   );
 
   return <SprintContext.Provider value={value}>{children}</SprintContext.Provider>;
-}
-
-function defaultEmpty(): SprintState {
-  return {
-    profile: { startupName: "", oneLiner: "", goal: "" },
-    assumptions: [],
-    hypotheses: [],
-    experiments: [],
-    learnings: [],
-  };
 }
 
 export function useSprint() {
