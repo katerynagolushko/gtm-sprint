@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>12-Week Customer Acquisition Sprint — Curriculum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #13221c;
+      --soft: #3a4f46;
+      --line: rgba(19, 34, 28, 0.14);
+      --signal: #e24a1a;
+      --forest: #1f6b4f;
+      --mist: #eef3f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Figtree, system-ui, sans-serif;
+      color: var(--ink);
+      background: #dfe8e3;
+      line-height: 1.35;
+    }
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 24px auto;
+      background: #fff;
+      padding: 14mm 12mm 12mm;
+      box-shadow: 0 18px 50px rgba(19, 34, 28, 0.12);
+    }
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+    .brand {
+      font-family: "Bricolage Grotesque", Georgia, serif;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin: 0;
+    }
+    .brand em { font-style: italic; color: var(--signal); }
+    .sub {
+      margin: 6px 0 0;
+      color: var(--soft);
+      font-size: 12.5px;
+      max-width: 52ch;
+    }
+    .meta {
+      text-align: right;
+      font-size: 11px;
+      color: var(--soft);
+      align-self: end;
+    }
+    .meta strong { display: block; color: var(--ink); font-size: 12px; margin-bottom: 2px; }
+    .phases {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 0 0 10px;
+    }
+    .phase {
+      background: var(--mist);
+      border-radius: 8px;
+      padding: 7px 9px;
+      font-size: 11px;
+    }
+    .phase b {
+      display: block;
+      font-family: "Bricolage Grotesque", Georgia, serif;
+      font-size: 12px;
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .phase span { color: var(--soft); }
+    .weeks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 14px;
+    }
+    .week {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 8px;
+      padding: 5px 0;
+      border-top: 1px solid var(--line);
+      break-inside: avoid;
+    }
+    .week:nth-child(1), .week:nth-child(2) { border-top: none; }
+    .n {
+      font-family: "Bricolage Grotesque", Georgia, serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--signal);
+      line-height: 1.1;
+      padding-top: 1px;
+    }
+    .week h3 {
+      margin: 0 0 2px;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .week p {
+      margin: 0;
+      font-size: 10.8px;
+      color: var(--soft);
+    }
+    .week .out {
+      display: inline;
+      color: var(--forest);
+      font-weight: 600;
+    }
+    footer {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 12px;
+      font-size: 10.5px;
+      color: var(--soft);
+    }
+    footer strong { color: var(--ink); }
+    .rule {
+      margin: 0;
+    }
+    @media print {
+      body { background: #fff; }
+      .sheet {
+        margin: 0;
+        box-shadow: none;
+        width: auto;
+        min-height: auto;
+        padding: 10mm 9mm;
+      }
+      .no-print { display: none !important; }
+    }
+    .toolbar {
+      width: 210mm;
+      margin: 16px auto 0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .toolbar button, .toolbar a {
+      font: inherit;
+      font-weight: 700;
+      font-size: 13px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #f4faf6;
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .toolbar .ghost {
+      background: transparent;
+      color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar no-print">
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+    <a class="ghost" href="/">Back to GTM Sprint</a>
+    <span style="font-size:12px;color:#3a4f46">One A4 page · use “Save as PDF” in the print dialog</span>
+  </div>
+
+  <main class="sheet">
+    <header>
+      <div>
+        <h1 class="brand">GTM <em>Sprint</em> · 12 weeks</h1>
+        <p class="sub">
+          A founder curriculum to nail customer acquisition: one weekly goal, one active bet,
+          a Friday number, and a learning decision. Fidelity rises only when evidence allows.
+        </p>
+      </div>
+      <div class="meta">
+        <strong>Customer Acquisition Sprint</strong>
+        12 weeks · 1 constraint at a time<br />
+        Output: repeatable acquisition motion
+      </div>
+    </header>
+
+    <div class="phases">
+      <div class="phase">
+        <b>Month 1 — Clarity & first signal</b>
+        <span>Who buys, where they are, first conversations, first smoke test.</span>
+      </div>
+      <div class="phase">
+        <b>Month 2 — Repeatable reach</b>
+        <span>One motion, volume, message iteration, path to qualified next step.</span>
+      </div>
+      <div class="phase">
+        <b>Month 3 — System & decision</b>
+        <span>Second channel only if earned; economics; freeze the playbook.</span>
+      </div>
+    </div>
+
+    <section class="weeks">
+      <article class="week">
+        <div class="n">01</div>
+        <div>
+          <h3>ICP + where they hang out</h3>
+          <p>Write a listable customer (role, context, pain) and 3 concrete places you can reach them this month. <span class="out">Done = 1-page ICP + channel map.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">02</div>
+        <div>
+          <h3>Discovery calls (pain language)</h3>
+          <p>Run problem interviews with a fixed script; capture phrases, current workaround, and “must-have” signals. <span class="out">Done = 10–15 calls logged + insight notes.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">03</div>
+        <div>
+          <h3>Offer artifact + CTA</h3>
+          <p>Turn insights into a one-pager or landing promise with one ask (call, waitlist, pilot). <span class="out">Done = live page/doc + clear CTA.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">04</div>
+        <div>
+          <h3>First channel smoke test</h3>
+          <p>Run one cheap motion (usually warm intros or community) against a Friday number. <span class="out">Done = bet + results + persevere/pivot/kill.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">05</div>
+        <div>
+          <h3>Lock one acquisition motion</h3>
+          <p>Choose the motion with the best Week 4 signal; build list, tools, and weekly ops checklist. <span class="out">Done = chosen motion + 50–100 ICP targets ready.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">06</div>
+        <div>
+          <h3>Volume test</h3>
+          <p>Execute meaningful volume in that motion (touches, posts, or light paid) without changing the offer mid-week. <span class="out">Done = activity log + conversion rates.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">07</div>
+        <div>
+          <h3>Message / offer iteration</h3>
+          <p>Keep the same channel; change one variable (hook, CTA, ICP slice) and compare to Week 6. <span class="out">Done = A/B learning + winning variant.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">08</div>
+        <div>
+          <h3>Qualification → next step</h3>
+          <p>Define what “qualified” means and the path after interest (demo, pilot brief, security questionnaire). <span class="out">Done = funnel stages + Week 8 conversion.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">09</div>
+        <div>
+          <h3>Second channel (only if earned)</h3>
+          <p>If Weeks 5–8 produced repeatable signal, add one adjacent channel; otherwise deepen the first. <span class="out">Done = go/no-go on channel #2.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">10</div>
+        <div>
+          <h3>CAC / effort economics</h3>
+          <p>Translate weekly work into rough cost per qualified conversation or pilot (time + spend). <span class="out">Done = unit-economics snapshot.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">11</div>
+        <div>
+          <h3>Freeze the playbook</h3>
+          <p>Document scripts, tools, list sources, weekly targets, and owner habits that worked. <span class="out">Done = 2–3 page acquisition playbook.</span></p>
+        </div>
+      </article>
+      <article class="week">
+        <div class="n">12</div>
+        <div>
+          <h3>Quarter decision</h3>
+          <p>Decide: double down, change ICP, kill a channel, or raise fidelity next quarter. <span class="out">Done = written decision + next 30-day plan.</span></p>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <p class="rule">
+        <strong>Weekly operating rule.</strong> One active bet only. Each week = assumption → acquisition plan (who / where / how / tools) → Friday metric → learning card.
+        Do not unlock paid scale or a second channel until discovery + a cheap smoke test produced evidence.
+      </p>
+      <p class="rule">
+        <strong>Program outcome.</strong> Not “12 hypotheses.” A repeatable way to reach a named customer, with numbers you trust and a clear next-quarter bet.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>
