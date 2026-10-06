@@ -1,3 +1,8 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "redirects": [
+    { "source": "/erik", "destination": "/erik/", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/((?!erik(?:/|$)).*)", "destination": "/index.html" }
+  ]
 }
