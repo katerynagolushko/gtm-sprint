@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kateryna Golushko — Portfolio Services, a16z New Media</title>
-<meta name="description" content="Helping a16z New Media portfolio founders with marketing and GTM. Short note from Kateryna Golushko.">
+<meta name="description" content="A short note from Kateryna Golushko about helping a16z New Media portfolio founders with marketing and GTM.">
 <meta property="og:title" content="Kateryna Golushko — Portfolio Services, a16z New Media">
-<meta property="og:description" content="I'd help portfolio founders with marketing and GTM. Quiet pitch for Portfolio Services Partner.">
+<meta property="og:description" content="What I'd do for portfolio founders on marketing and GTM, plus a tiny GTM first-pass tool.">
 <meta name="theme-color" content="#f6f3ee">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23f6f3ee'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-size='16' fill='%236b4f3a'%3EK%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
@@ -23,12 +23,16 @@
     <p class="top__role">Portfolio Services <span>·</span> a16z New Media</p>
   </header>
 
-  <section class="open" aria-label="Opening">
-    <p>Hey — I’d help portfolio founders with the marketing and GTM side of things. The part after you ship: who to talk to, what to say, how to get real conversations going.</p>
-    <p>Curious how New Media already supports founders here, and where an extra pair of hands would help. Down to start with a short contract trial.</p>
+  <!-- 1. Greeting + intro. Replace the sample text after each [TAG]; delete the tags when done. -->
+  <section class="open" aria-label="Intro">
+    <p><span class="ph">[HELLO]</span> Hey, I’m Kateryna — nice to meet you.</p>
+    <p><span class="ph">[WHY THIS]</span> I like the messy marketing and GTM part right after founders ship, and New Media feels like a good place to help with it.</p>
+    <p><span class="ph">[WHAT I DO / DID]</span> Lately I’ve been helping early-stage founders figure out who to sell to and how to get first conversations going.</p>
   </section>
 
-  <section class="ideas" aria-label="Ideas">
+  <!-- 2. What I'd do for you -->
+  <h2 class="label">What I’d do for you</h2>
+  <section class="ideas" aria-label="What I'd do for you">
     <details class="card">
       <summary>
         <span class="card__n">01</span>
@@ -36,8 +40,7 @@
         <span class="card__hint" aria-hidden="true"></span>
       </summary>
       <div class="card__body">
-        <p>I’ve been freelancing with early-stage founders on GTM experiments — figuring out where their ICP actually is, and how to reach them without burning the list. Happy to do the same with New Media portfolio companies: positioning, light campaigns, events that turn into meetings.</p>
-        <p>Not a loud playbook. Just someone who’s down to dig in with them.</p>
+        <p><span class="ph">[EDIT]</span> Help figure out where their buyers actually are and how to reach them: positioning, small experiments, events that turn into meetings.</p>
       </div>
     </details>
 
@@ -48,8 +51,7 @@
         <span class="card__hint" aria-hidden="true"></span>
       </summary>
       <div class="card__body">
-        <p>Own the relationships. Be available when GTM feels stuck — outbound, intros, partnerships, “what do we say on the site.” Help them think it through without needing a full marketing team yet.</p>
-        <p>I’ve done versions of this on the portfolio side at Ultra and with Launch Club founders. Soft touch, practical answers.</p>
+        <p><span class="ph">[EDIT]</span> Someone founders can message when outbound, intros or “what do we say on the site” feels stuck. Practical answers, soft touch.</p>
       </div>
     </details>
 
@@ -60,33 +62,72 @@
         <span class="card__hint" aria-hidden="true"></span>
       </summary>
       <div class="card__body">
-        <p>I’m in London until around February, then heading toward SF. If it’s useful, I can host small founder/investor dinners or make intros from my London network — for portfolio companies, or for people New Media wants to meet.</p>
-        <p>Not pitching a big “Europe strategy.” Just offering the network while I’m here.</p>
+        <p><span class="ph">[EDIT]</span> I’m in London until around February. Happy to host small founder/investor dinners or make intros from my network while I’m here.</p>
+      </div>
+    </details>
+
+    <!-- 4. Working mini tool -->
+    <details class="card card--tool" id="tool">
+      <summary>
+        <span class="card__n">↳</span>
+        <span class="card__title">Try it: GTM first-pass</span>
+        <span class="card__hint" aria-hidden="true"></span>
+      </summary>
+      <div class="card__body tool">
+        <p class="tool__intro">Type a startup and what it does. You get a few buyer personas and three opening lines to react to.</p>
+        <form class="tool__form" id="gtm-form" autocomplete="off" novalidate>
+          <label class="field">
+            <span>Startup name</span>
+            <input id="f-name" name="name" type="text" maxlength="60" placeholder="Acme" required>
+          </label>
+          <label class="field field--wide">
+            <span>One-line description</span>
+            <input id="f-desc" name="desc" type="text" maxlength="160" placeholder="AI bookkeeping for small agencies" required>
+          </label>
+          <label class="field field--wide">
+            <span>Target market <em>(optional)</em></span>
+            <input id="f-market" name="market" type="text" maxlength="80" placeholder="e.g. UK marketing agencies, 5–50 people">
+          </label>
+          <div class="tool__actions">
+            <button type="submit" class="btn">Draft first pass</button>
+            <p class="tool__note">Runs in your browser · rule-based v1 · nothing is sent anywhere</p>
+          </div>
+          <p class="tool__error" id="gtm-error" role="alert" hidden></p>
+        </form>
+
+        <div class="tool__out" id="gtm-out" aria-live="polite" hidden>
+          <h3 class="tool__h">Who to talk to first</h3>
+          <ol class="personas" id="gtm-personas"></ol>
+
+          <h3 class="tool__h">Opening lines</h3>
+          <ol class="lines" id="gtm-lines"></ol>
+          <p class="tool__note tool__note--foot" id="gtm-meta"></p>
+        </div>
       </div>
     </details>
   </section>
 
   <div class="foot">
+    <!-- 3. About me -->
     <details class="about">
       <summary>
-        A little about me
-        <span>optional</span>
+        About me
+        <span aria-hidden="true"></span>
       </summary>
       <div class="about__body">
-        <p>I’ve worked with early-stage founders on GTM and community — Ultra.vc (portfolio &amp; accelerators), Launch Club Capital, and now Momentum Mill. Short stint on brand at Amazon before that. I like rooms where founders actually meet people who can help.</p>
-        <p>Based in London for now; open to SF for this. Contractor-ready. Happy to keep it humble and prove it in the work.</p>
+        <p><span class="ph">[ABOUT]</span> Before this: portfolio and accelerator work at Ultra.vc, community and investor relations at Launch Club Capital, a short brand role at Amazon. Now Momentum Mill.</p>
+        <p><span class="ph">[WHERE / WHEN]</span> London until ~Feb 2027, then SF. Contractor-ready; happy to start with a short trial.</p>
+        <p><span class="ph">[OPTIONAL]</span> Something personal or a quote, if you want one.</p>
       </div>
     </details>
 
     <div class="contact" id="contact">
-      <a class="mail" href="mailto:kateryna@momentummill.com">kateryna@momentummill.com</a>
+      <a class="mail" href="mailto:katerynagolushko@gmail.com">katerynagolushko@gmail.com</a>
       <a class="cta" href="https://jobs.ashbyhq.com/a16z-new-media/5ca187ee-36b6-40c2-8d0d-34dedd3eea68" rel="noopener">Apply link ↗</a>
       <p class="avail">London until ~Feb 2027 · short remote/contract trial anytime · 1–3 month contract fits</p>
     </div>
   </div>
-
-  <!-- Optional Cosign quote slot — leave empty until you have one -->
-  <!-- <p class="whisper">“…” — via Cosign</p> -->
 </main>
+<script src="assets/app.js" defer></script>
 </body>
 </html>
