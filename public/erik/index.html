@@ -65,46 +65,6 @@
         <p><span class="ph">[EDIT]</span> I’m in London until around February. Happy to host small founder/investor dinners or make intros from my network while I’m here.</p>
       </div>
     </details>
-
-    <!-- 4. Working mini tool -->
-    <details class="card card--tool" id="tool">
-      <summary>
-        <span class="card__n">↳</span>
-        <span class="card__title">Try it: GTM first-pass</span>
-        <span class="card__hint" aria-hidden="true"></span>
-      </summary>
-      <div class="card__body tool">
-        <p class="tool__intro">Type a startup and what it does. You get a few buyer personas and three opening lines to react to.</p>
-        <form class="tool__form" id="gtm-form" autocomplete="off" novalidate>
-          <label class="field">
-            <span>Startup name</span>
-            <input id="f-name" name="name" type="text" maxlength="60" placeholder="Acme" required>
-          </label>
-          <label class="field field--wide">
-            <span>One-line description</span>
-            <input id="f-desc" name="desc" type="text" maxlength="160" placeholder="AI bookkeeping for small agencies" required>
-          </label>
-          <label class="field field--wide">
-            <span>Target market <em>(optional)</em></span>
-            <input id="f-market" name="market" type="text" maxlength="80" placeholder="e.g. UK marketing agencies, 5–50 people">
-          </label>
-          <div class="tool__actions">
-            <button type="submit" class="btn">Draft first pass</button>
-            <p class="tool__note">Runs in your browser · rule-based v1 · nothing is sent anywhere</p>
-          </div>
-          <p class="tool__error" id="gtm-error" role="alert" hidden></p>
-        </form>
-
-        <div class="tool__out" id="gtm-out" aria-live="polite" hidden>
-          <h3 class="tool__h">Who to talk to first</h3>
-          <ol class="personas" id="gtm-personas"></ol>
-
-          <h3 class="tool__h">Opening lines</h3>
-          <ol class="lines" id="gtm-lines"></ol>
-          <p class="tool__note tool__note--foot" id="gtm-meta"></p>
-        </div>
-      </div>
-    </details>
   </section>
 
   <div class="foot">
@@ -128,6 +88,5 @@
     </div>
   </div>
 </main>
-<script src="assets/app.js" defer></script>
 </body>
 </html>
